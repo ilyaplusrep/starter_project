@@ -1,0 +1,28 @@
+digraph G {
+graph [rankdir=TB, bgcolor="white", pad=0.2, nodesep=0.25, ranksep=0.35];
+node [shape=box, style="rounded,filled", fontname="Times New Roman", fontsize=11, color="#2F5597", fillcolor="#EAF2F8", margin="0.12,0.08"];
+edge [fontname="Times New Roman", fontsize=9, color="#555555"];
+start [label="Начало", shape=oval, fillcolor="#E2F0D9", color="#548235"];
+end [label="Завершение", shape=oval, fillcolor="#FCE4D6", color="#C65911"];
+n1 [label="Ввести количество (int), цену и скидку (double)\nчерез Scanner; ставка НДС = константа VAT_RATE" ,shape=parallelogram,fillcolor="#E4DFEC",color="#7030A0"];
+n1f [label="Формат ввода верный\n(нет InputMismatchException)" ,shape=diamond,fillcolor="#FFF2CC",color="#BF9000"];
+n2 [label="A1 isValid: проверить\n0 < количество ≤ QUANTITY_MAX (10 000)\n0 < цена ≤ UNIT_PRICE_MAX (5 000 000)\n0 ≤ скидка ≤ DISCOUNT_PERCENT_MAX (45)"];
+n3 [label="Данные корректны" ,shape=diamond,fillcolor="#FFF2CC",color="#BF9000"];
+n4 [label="Вычислить базовую сумму\nбаза = количество × цена" ];
+n5 [label="A2 Применить скидку и НДС:\nсо скидкой = база × (100 - скидка) / 100\nНДС = со скидкой × VAT_RATE / 100\nитог = со скидкой + НДС" ];
+n6 [label="Вывести базу, сумму со скидкой, НДС и итог\nв рублях с двумя знаками (printf %.2f)" ];
+n7f [label="Вывести «неверные типы данных»" ];
+n7 [label="Вывести «данные выходят за границы»" ];
+start -> n1;
+n1 -> n1f;
+n1f -> n2 [label="да"];
+n1f -> n7f [label="нет"];
+n2 -> n3;
+n3 -> n4 [label="да"];
+n3 -> n7 [label="нет"];
+n4 -> n5;
+n5 -> n6;
+n6 -> end;
+n7 -> end;
+n7f -> end;
+}
